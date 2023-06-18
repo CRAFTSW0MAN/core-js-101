@@ -18,8 +18,8 @@
  *   'aa',''    => 'aa'
  *   '',  'bb'  => 'bb'
  */
-function concatenateStrings(/* value1, value2 */) {
-  throw new Error('Not implemented');
+function concatenateStrings(value1, value2) {
+  return value1 + value2;
 }
 
 
@@ -34,8 +34,8 @@ function concatenateStrings(/* value1, value2 */) {
  *   'b'     => 1
  *   ''      => 0
  */
-function getStringLength(/* value */) {
-  throw new Error('Not implemented');
+function getStringLength(value) {
+  return value.length;
 }
 
 /**
@@ -51,8 +51,8 @@ function getStringLength(/* value */) {
  *   'John','Doe'      => 'Hello, John Doe!'
  *   'Chuck','Norris'  => 'Hello, Chuck Norris!'
  */
-function getStringFromTemplate(/* firstName, lastName */) {
-  throw new Error('Not implemented');
+function getStringFromTemplate(firstName, lastName) {
+  return `Hello, ${firstName} ${lastName}!`;
 }
 
 /**
@@ -65,8 +65,11 @@ function getStringFromTemplate(/* firstName, lastName */) {
  *   'Hello, John Doe!' => 'John Doe'
  *   'Hello, Chuck Norris!' => 'Chuck Norris'
  */
-function extractNameFromTemplate(/* value */) {
-  throw new Error('Not implemented');
+function extractNameFromTemplate(value) {
+  const words = value.split(' ');
+  const firstName = words[1];
+  const lastName = words[2];
+  return `${firstName} ${lastName.slice(0, -1)}`;
 }
 
 
@@ -80,8 +83,8 @@ function extractNameFromTemplate(/* value */) {
  *   'John Doe'  => 'J'
  *   'cat'       => 'c'
  */
-function getFirstChar(/* value */) {
-  throw new Error('Not implemented');
+function getFirstChar(value) {
+  return value.slice(0, 1);
 }
 
 /**
@@ -95,8 +98,8 @@ function getFirstChar(/* value */) {
  *   'cat'              => 'cat'
  *   '\tHello, World! ' => 'Hello, World!'
  */
-function removeLeadingAndTrailingWhitespaces(/* value */) {
-  throw new Error('Not implemented');
+function removeLeadingAndTrailingWhitespaces(value) {
+  return value.trim();
 }
 
 /**
@@ -110,8 +113,8 @@ function removeLeadingAndTrailingWhitespaces(/* value */) {
  *   'A', 5  => 'AAAAA'
  *   'cat', 3 => 'catcatcat'
  */
-function repeatString(/* value, count */) {
-  throw new Error('Not implemented');
+function repeatString(value, count) {
+  return value.repeat(count);
 }
 
 /**
@@ -126,8 +129,8 @@ function repeatString(/* value, count */) {
  *   'I like legends', 'end' => 'I like legs',
  *   'ABABAB','BA' => 'ABAB'
  */
-function removeFirstOccurrences(/* str, value */) {
-  throw new Error('Not implemented');
+function removeFirstOccurrences(str, value) {
+  return str.replace(value, '');
 }
 
 /**
@@ -141,8 +144,8 @@ function removeFirstOccurrences(/* str, value */) {
  *   '<span>' => 'span'
  *   '<a>' => 'a'
  */
-function unbracketTag(/* str */) {
-  throw new Error('Not implemented');
+function unbracketTag(str) {
+  return str.replace(/[<>]/g, '');
 }
 
 
@@ -156,8 +159,8 @@ function unbracketTag(/* str */) {
  *   'Thunderstruck' => 'THUNDERSTRUCK'
  *  'abcdefghijklmnopqrstuvwxyz' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
  */
-function convertToUpperCase(/* str */) {
-  throw new Error('Not implemented');
+function convertToUpperCase(str) {
+  return str.toUpperCase();
 }
 
 /**
@@ -175,8 +178,8 @@ function convertToUpperCase(/* str */) {
  *   ],
  *   'info@gmail.com' => ['info@gmail.com']
  */
-function extractEmails(/* str */) {
-  throw new Error('Not implemented');
+function extractEmails(str) {
+  return str.split(';');
 }
 
 /**
@@ -202,8 +205,15 @@ function extractEmails(/* str */) {
  *             '└──────────┘\n'
  *
  */
-function getRectangleString(/* width, height */) {
-  throw new Error('Not implemented');
+function getRectangleString(width, height) {
+  const start = '┌';
+  const center = `${'─'.repeat(width - 2)}`;
+  const end = '┐\n';
+  const two = `│${' '.repeat(width - 2)}│\n`.repeat(height - 2);
+  const startThree = '└';
+  const centerThree = `${'─'.repeat(width - 2)}`;
+  const endThree = '┘\n';
+  return start + center + end + two + startThree + centerThree + endThree;
 }
 
 
@@ -223,8 +233,65 @@ function getRectangleString(/* width, height */) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
+function encodeToRot13(value) {
+  if (!value) throw new Error('Incorrect arguments!');
+  const arr = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+  const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const str = value.toUpperCase();
+  // мыссив с длиннами слов
+  const array = str.split(' ');
+  const splitArr = [];
+  for (let i = 0; i < array.length; i += 1) {
+    splitArr.push(array[i].length);
+  }
+  // ============================================
+  const start = Array.from(str); /* содержит массив из всех букв в верхнем регситре */
+  let arrStr = [];
+  // let arrSave = [];
+  // let arrCipher = [];
+  const arrSum = [];
+  const result = [];
+  // создаем массив цифр равный номеру в алфавите
+  for (let i = 0; i < str.length; i += 1) {
+    const index = arr.indexOf(str[i]);
+    arrStr.push(index); /* содержит массив из цифр соответсвующие индексу пример А = 0; Е = 3 */
+  }
+  arrStr = arrStr.filter((item) => item !== -1);
+  // создаем массив cпустыми значениями пример ['','','','!','','1','2']
+  for (let i = 0; i < start.length; i += 1) {
+    if (start[i].match(/[A-Z]/)) {
+      start[i] = '';
+    }
+  }
+  // создаем массив сумм двух массивов
+  for (let j = 0; j < arrStr.length; j += 1) {
+    const index = (arrStr[j] + 13) % 26; /* прибавляем в идексу числа 13 и %26 */
+    arrSum.push(index); /* узнаем новый идекс буквы сдвинутой на 13 символов и пушим его в массив */
+  }
+  // выводим массив в буквы
+  for (let i = 0; i < arrSum.length; i += 1) {
+    const index = arrSum[i];
+    const letter = alphabet.charAt(index);
+    result.push(letter); /* получаем массив с  зашифрованными буквами */
+  }
+
+  // вставляет в start result
+  let g = 0;
+
+  for (let i = 0; i < start.length; i += 1) {
+    if (start[i] === '') {
+      start[i] = result[g];
+      g += 1;
+    }
+  }
+  const end = start.join('').toLowerCase();
+  for (let i = 0; i < value.length; i += 1) {
+    const isUpperCase = value[i].toUpperCase() === value[i];
+    if (!isUpperCase) {
+      end[i] = end[i].toUpperCase();
+    }
+  }
+  return end;
 }
 
 /**
@@ -240,8 +307,12 @@ function encodeToRot13(/* str */) {
  *   isString('test') => true
  *   isString(new String('test')) => true
  */
-function isString(/* value */) {
-  throw new Error('Not implemented');
+function isString(value) {
+  let flag = false;
+  if (typeof value === 'string' || value instanceof String) {
+    flag = true;
+  }
+  return flag;
 }
 
 
@@ -269,10 +340,10 @@ function isString(/* value */) {
  *   'Q♠' => 50
  *   'K♠' => 51
  */
-function getCardId(/* value */) {
-  throw new Error('Not implemented');
+function getCardId(value) {
+  const arr = ['A♣', '2♣', '3♣', '4♣', '5♣', '6♣', '7♣', '8♣', '9♣', '10♣', 'J♣', 'Q♣', 'K♣', 'A♦', '2♦', '3♦', '4♦', '5♦', '6♦', '7♦', '8♦', '9♦', '10♦', 'J♦', 'Q♦', 'K♦', 'A♥', '2♥', '3♥', '4♥', '5♥', '6♥', '7♥', '8♥', '9♥', '10♥', 'J♥', 'Q♥', 'K♥', 'A♠', '2♠', '3♠', '4♠', '5♠', '6♠', '7♠', '8♠', '9♠', '10♠', 'J♠', 'Q♠', 'K♠'];
+  return arr.indexOf(value);
 }
-
 
 module.exports = {
   concatenateStrings,
