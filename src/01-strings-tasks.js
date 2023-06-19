@@ -233,68 +233,27 @@ function getRectangleString(width, height) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* value */) {
-  throw new Error('Not implemented');
-  // if (!value) throw new Error('Incorrect arguments!');
-  // const arr = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
-  // 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
-  // const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  // const str = value.toUpperCase();
-  // // мыссив с длиннами слов
-  // const array = str.split(' ');
-  // const splitArr = [];
-  // for (let i = 0; i < array.length; i += 1) {
-  //   splitArr.push(array[i].length);
-  // }
-  // // ============================================
-  // const start = Array.from(str); /* содержит массив из всех букв в верхнем регситре */
-  // let arrStr = [];
-  // // let arrSave = [];
-  // // let arrCipher = [];
-  // const arrSum = [];
-  // const result = [];
-  // // создаем массив цифр равный номеру в алфавите
-  // for (let i = 0; i < str.length; i += 1) {
-  //   const index = arr.indexOf(str[i]);
-  //   arrStr.push(index); /* содержит массив из цифр соответсвующие индексу пример А = 0; Е = 3 */
-  // }
-  // arrStr = arrStr.filter((item) => item !== -1);
-  // // создаем массив cпустыми значениями пример ['','','','!','','1','2']
-  // for (let i = 0; i < start.length; i += 1) {
-  //   if (start[i].match(/[A-Z]/)) {
-  //     start[i] = '';
-  //   }
-  // }
-  // // создаем массив сумм двух массивов
-  // for (let j = 0; j < arrStr.length; j += 1) {
-  //   const index = (arrStr[j] + 13) % 26; /* прибавляем в идексу числа 13 и %26 */
-  //   arrSum.push(index);
-  /* узнаем новый идекс буквы сдвинутой на 13 символов и пушим его в массив */
-  // }
-  // // выводим массив в буквы
-  // for (let i = 0; i < arrSum.length; i += 1) {
-  //   const index = arrSum[i];
-  //   const letter = alphabet.charAt(index);
-  //   result.push(letter); /* получаем массив с  зашифрованными буквами */
-  // }
+function encodeToRot13(str) {
+  const alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+  const cipher = ['N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm'];
+  const arrStr = [];
+  for (let i = 0; i < str.length; i += 1) {
+    const index = alphabet.indexOf(str[i]);
+    if (index === -1) {
+      arrStr.push(str[i]);
+    } else {
+      arrStr.push(index); /* содержит массив из цифр соответсвующие индексу пример А = 0; Е = 3 */
+    }
+  }
 
-  // // вставляет в start result
-  // let g = 0;
-
-  // for (let i = 0; i < start.length; i += 1) {
-  //   if (start[i] === '') {
-  //     start[i] = result[g];
-  //     g += 1;
-  //   }
-  // }
-  // const end = start.join('').toLowerCase();
-  // for (let i = 0; i < value.length; i += 1) {
-  //   const isUpperCase = value[i].toUpperCase() === value[i];
-  //   if (!isUpperCase) {
-  //     end[i] = end[i].toUpperCase();
-  //   }
-  // }
-  // return end;
+  // проверяет тип элемента массива.Если = число, то заменяется на нужную букву
+  const result = arrStr.map((item) => {
+    if (typeof item === 'number') {
+      return cipher[item];
+    }
+    return item;
+  });
+  return result.join('');
 }
 
 /**
