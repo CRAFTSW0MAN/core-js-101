@@ -113,12 +113,12 @@ function getLinearEquationRoot(a, b) {
  *   (0,1) (0,1)     => 0
  *   (0,1) (1,2)     => 0
  */
-function getAngleBetweenVectors(/* x1, y1, x2, y2 */) {
-  throw new Error('Not implemented');
-  // const first = ((x1 * y1) + (x2 * y2));
-  // const second = (Math.sqrt((x1 ** 2) + (x2 ** 2)) * Math.sqrt((y1 ** 2) + (y2 ** 2)));
-  // const num = first / second;
-  // return num;
+function getAngleBetweenVectors(x1, y1, x2, y2) {
+  const first = (x1 * x2) + (y1 * y2);
+  const second = Math.sqrt((x1 ** 2) + (y1 ** 2)) * Math.sqrt((x2 ** 2) + (y2 ** 2));
+
+  const num = Math.acos(first / second);
+  return num;
 }
 
 /**
@@ -188,8 +188,9 @@ function getParallelepipedDiagonal(a, b, c) {
  *   1678, 2  => 1700
  *   1678, 3  => 2000
  */
-function roundToPowerOfTen(/* num, pow */) {
-  throw new Error('Not implemented');
+function roundToPowerOfTen(num, pow) {
+  const first = 10 ** pow;
+  return Math.round(num / first) * first;
 }
 
 /**
